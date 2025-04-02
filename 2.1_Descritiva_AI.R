@@ -11,7 +11,7 @@ if (descritivas == 1) {
   # Função auxiliar para cálculo de estatísticas
   calcular_estatisticas <- function(data, coluna) {
     data %>%
-      group_by(ano) %>%
+      group_by(ano_q) %>%
       summarise(
         Min = min(.data[[coluna]], na.rm = TRUE),
         Q1 = quantile(.data[[coluna]], 0.25, na.rm = TRUE),
@@ -27,35 +27,35 @@ if (descritivas == 1) {
   # GERAL
   cat('\n========== ESTATÍSTICAS GERAIS ==========\n')
   cat('\nEstatísticas de Aprovados por Ano (GERAL):\n')
-  print(calcular_estatisticas(txRend_AI, 'aprovacao'))
+  print(calcular_estatisticas(txRend_AI, 'aprovacao_q'))
   
   cat('\nEstatísticas de Abandono por Ano (GERAL):\n')
-  print(calcular_estatisticas(txRend_AI, 'abandono'))
+  print(calcular_estatisticas(txRend_AI, 'abandono_q'))
   
   # ESTADUAL
   cat('\n========== ESTATÍSTICAS ESTADUAIS ==========\n')
-  txRend_estadual_AI <- txRend_AI %>% filter(dependencia_id == 'Estadual')
+  txRend_estadual_AI <- txRend_AI %>% filter(dependencia_id_q == 'Estadual')
   
   cat('\nEstatísticas de Aprovados por Ano (ESTADUAL):\n')
-  print(calcular_estatisticas(txRend_estadual_AI, 'aprovacao'))
+  print(calcular_estatisticas(txRend_estadual_AI, 'aprovacao_q'))
   
   cat('\nEstatísticas de Abandono por Ano (ESTADUAL):\n')
-  print(calcular_estatisticas(txRend_estadual_AI, 'abandono'))
+  print(calcular_estatisticas(txRend_estadual_AI, 'abandono_q'))
   
   # MUNICIPAL
   cat('\n========== ESTATÍSTICAS MUNICIPAIS ==========\n')
-  txRend_municipal_AI <- txRend_AI %>% filter(dependencia_id == 'Municipal')
+  txRend_municipal_AI <- txRend_AI %>% filter(dependencia_id_q == 'Municipal')
   
   cat('\nEstatísticas de Aprovados por Ano (MUNICIPAL):\n')
-  print(calcular_estatisticas(txRend_municipal_AI, 'aprovacao'))
+  print(calcular_estatisticas(txRend_municipal_AI, 'aprovacao_q'))
   
   cat('\nEstatísticas de Abandono por Ano (MUNICIPAL):\n')
-  print(calcular_estatisticas(txRend_municipal_AI, 'abandono'))
+  print(calcular_estatisticas(txRend_municipal_AI, 'abandono_q'))
   
-  # Contagem de elementos por ibge_id
+  # Contagem de elementos por ibge_id_q
   cat('\n========== CONTAGEM DE ELEMENTOS POR MUNICÍPIO (IBGE_ID) ==========\n')
   tabela_ibge <- txRend_AI %>%
-    group_by(ibge_id) %>%
+    group_by(ibge_id_q) %>%
     summarise(quantidade = n()) %>%
     arrange(desc(quantidade))  # Ordena do maior para o menor
   
@@ -76,7 +76,7 @@ if (descritivas == 1) {
       }) %>%
       print()
     cat('\nQtde. de municípios:\n')
-    print(length(levels(txRend_AI$ibge_id)))
+    print(length(levels(txRend_AI$ibge_id_q)))
     cat('\n|| FIM *** TAXA DE RENDIMENTO *** AI ||')
   } else {
     cat('\n(!) Variáveis categóricas não rodadas.\n')

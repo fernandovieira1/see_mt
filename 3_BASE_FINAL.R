@@ -72,3 +72,5 @@ head(base_final)
 
 base_final %>%
   filter(municipio == "Cuiabá")
+
+glimpse(base_final)
